@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="">
+
+<style>
+    .black_overlay{
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=88);
+    }
+    .white_content {
+        display: none;
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        width: 40%;
+        height: 40%;
+        padding: 20px;
+        border: 2px solid black;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
+
+    .reveal-modal-bg {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background: #000;
+        background: rgba(0,0,0,.8);
+        z-index: 100;
+        display: none;
+        top: 0;
+        left: 0;
+    }
+
+    .reveal-modal {
+        visibility: hidden;
+        top: 100px;
+        left: 50%;
+        margin-left: -300px;
+        width: 520px;
+        background-color: white;
+        position: absolute;
+        z-index: 101;
+        padding: 30px 40px 34px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+        -box-shadow: 0 0 10px rgba(0,0,0,.4);
+    }
+
+    .reveal-modal.small { width: 200px; margin-left: -140px;}
+    .reveal-modal.medium { width: 400px; margin-left: -240px;}
+    .reveal-modal.large { width: 600px; margin-left: -340px;}
+    .reveal-modal.xlarge { width: 800px; margin-left: -440px;}
+
+    .reveal-modal .close-reveal-modal {
+        font-size: 22px;
+        line-height: .5;
+        position: absolute;
+        top: 8px;
+        right: 11px;
+        color: #aaa;
+        text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+
+<head>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/func.js?v=1.0" type="text/javascript"></script>
+    <script src="../js/jquery-ui-1.10.4.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.serializejson.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="PIXINVENT">
+    <title>中国网络安全审查与认证区块链平台-用户审核</title>
+    <link rel="apple-touch-icon" href="../images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+          rel="stylesheet">
+    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
+          rel="stylesheet">
+    <!-- BEGIN VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="../css/vendors.css">
+    <link rel="stylesheet" type="text/css" href="../vendors/css/tables/jsgrid/jsgrid-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../vendors/css/tables/jsgrid/jsgrid.min.css">
+    <!-- END VENDOR CSS-->
+    <!-- BEGIN MODERN CSS-->
+    <link rel="stylesheet" type="text/css" href="../css/app.css">
+    <!-- END MODERN CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <link rel="stylesheet" type="text/css" href="../css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../css/core/colors/palette-gradient.css">
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- END Custom CSS-->
+
+    <style type="text/css">
+        body {
+            font-family:microsoft yahei!important;}
+        .icon-bg-circle {
+            color: #FFFFFF;
+            padding: 0.2rem;
+            border-radius: 50%;
+        }
+        .media-heading{font-size:14px;}
+        /*.ft-plus-square{font-size:16px;}
+        */
+    </style>
+</head>
+<body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar"
+      data-open="click" data-menu="vertical-menu" data-col="2-columns">
+<!-- fixed-top-->
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light bg-info navbar-shadow">
+    <div class="navbar-wrapper">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+                <li class="nav-item"> <a class="navbar-brand" href="index.html"> <img class="brand-logo" alt="modern admin logo" src="../images/logo/logo.png">
+                    <h3 class="brand-text" style="color:#fff!important;font-size:16px; font-family:microsoft yahei;">质量认证区块链平台</h3>
+                </a> </li>
+                <li class="nav-item d-md-none"> <a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a> </li>
+            </ul>
+        </div>
+        <div class="navbar-container content">
+            <div class="collapse navbar-collapse" id="navbar-mobile">
+                <ul class="nav navbar-nav mr-auto float-left">
+                    <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+                    <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
+
+                    <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="search-details.html"><i class="ficon ft-search"></i></a>
+                        <div class="search-input">
+                            <input class="input" type="text" placeholder="Explore Modern...">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav float-right">
+                    <li class="dropdown dropdown-user nav-item"> <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"> <span class="mr-1">您好, <span class="user-name text-bold-700" id="currentLogin">丁**</span> </span> <span class="avatar avatar-online"> <img src="../images/portrait/small/me.png" alt="avatar"><i></i></span> </a>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="topassword"><i class="ft-user"></i>更改密码</a> <a class="dropdown-item" href="#"><i class="ft-mail"></i> 个人信息</a> <a class="dropdown-item" href="#"><i class="ft-check-square"></i>个人信息</a> <a class="dropdown-item" href="#"><i class="ft-message-square"></i> 个人信息</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" onclick="logout()"><i class="ft-power"></i> 退 出</a> </div>
+                    </li>
+
+
+                    <script>
+                        var token=Cookies.get("token");
+                        function logout(){
+                            var data1=JSON.stringify({"peers":["peer0.org1.example.com","peer0.org2.example.com","peer0.org3.example.com"],"fcn":"userLogout","args":[""]});
+                            $.ajax({
+                                dataType:"json",
+                                type:"post",
+                                contentType: 'application/json',
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader("Authorization", "Bearer "+token);
+                                },
+                                crossDomain: true,
+                                url:"http://47.105.220.31:4000/channels/mychannel/chaincodes/mycc",
+                                data:data1,
+                                eache: false,
+                                success: function (data) {
+                                    console.log(data);
+                                    if(data.success==true){
+                                        Cookies.set("token","");
+                                        window.location="login-simple.html";
+                                    }
+                                },
+                                error: function () {
+                                    console.log(11);
+                                    return;
+                                }
+                            });
+
+
+                        }
+                    </script>
+                    <li class="dropdown dropdown-notification nav-item"> <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i> <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span> </a>
+                        <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                            <li class="dropdown-menu-header">
+                                <h6 class="dropdown-header m-0"> <span class="grey darken-2">消息通知</span> </h6>
+                                <span class="notification-tag badge badge-default badge-danger float-right m-0">5</span> </li>
+                            <li class="scrollable-container media-list w-100"> <a href="javascript:void(0)">
+                                <div class="media">
+                                    <div class="media-left align-self-center" style="padding-right:0.4rem;"><i class="ft-file icon-bg-circle bg-cyan" style="font-size:16px; padding:0.4rem;font-weight:normal;"></i></div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">目前待审核的信息有5条</h6>
+                                    </div>
+                                </div>
+                            </a> <a href="javascript:void(0)">
+                                <div class="media">
+                                    <div class="media-left align-self-center" style="padding-right:0.4rem;"><i class="ft-file icon-bg-circle bg-cyan" style="font-size:16px; padding:0.4rem;font-weight:normal;"></i></div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading red darken-1">姜**下载了一条证书</h6>
+                                    </div>
+                                </div>
+                            </a> <a href="javascript:void(0)">
+                                <div class="media">
+                                    <div class="media-left align-self-center" style="padding-right:0.4rem;"><i class="ft-file icon-bg-circle bg-cyan" style="font-size:16px; padding:0.4rem;font-weight:normal;"></i></div>
+                                    <div class="media-body">
+                                        <p class="notification-text font-small-3 text-muted">谭*下载了一条证书</p>
+                                        <small>
+                                        </small> </div>
+                                </div>
+                            </a> <a href="javascript:void(0)">
+                                <div class="media">
+                                    <div class="media-left align-self-center" style="padding-right:0.4rem;"><i class="ft-file icon-bg-circle bg-cyan" style="font-size:16px; padding:0.4rem;font-weight:normal;"></i></div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">张*更新了个人信息资料</h6>
+                                    </div>
+                                </div>
+                            </a> <a href="javascript:void(0)">
+                                <div class="media">
+                                    <div class="media-left align-self-center" style="padding-right:0.4rem;"><i class="ft-file icon-bg-circle bg-cyan" style="font-size:16px; padding:0.4rem;font-weight:normal;"></i></div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">高*新注册了个人资料</h6>
+                                    </div>
+                                </div>
+                            </a> </li>
+                            <li class="dropdown-menu-footer" style="font-size:12px;"><a class="dropdown-item text-muted text-center" href="javascript:void(0)" style="padding-top:10px;">查看所有消息通知</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="main-menu menu-fixed menu-dark menu-accordion    menu-shadow " data-scroll-to-active="true">
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" style="font-family:microsoft yahei;">
+            <li class="active"><a href="toUserReview"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">用户审核
+
+
+</span></a>
+
+            </li>
+            <!-- <li class=" nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title" data-i18n="nav.templates.main">用户维护</span></a> -->
+            <!-- <ul class="menu-content">          -->
+            <!-- <li><a class="menu-item" href="revise-password.html" data-i18n="">密码修改</a> </li> -->
+            <!-- <li><a class="menu-item" href="recover-password.html" data-i18n="">忘记密码</a> </li> -->
+            <!-- </ul> -->
+            <!-- </li> -->
+
+
+
+
+
+
+            <li class="nav-item"><a href="#"><i class="la la-columns"></i><span class="menu-title" data-i18n="nav.page_layouts.main">证书查询</span></a>
+                <ul class="menu-content">
+
+                    <li><a class="menu-item" href="Certificate_download.html" data-i18n="">综合查询</a> </li>
+                    <li><a class="menu-item" href="search-details.html" data-i18n="">条件查询</a> </li>
+
+                </ul>
+            </li>
+
+
+            <li class=" nav-item jianguanjigou"><a href="#"><i class="la la-navicon"></i><span class="menu-title" data-i18n="nav.navbars.main">数据审核</span></a>
+                <ul class="menu-content">
+                    <li class="has-sub"><a class="menu-item renzhengAndshenheyuan" href="#" data-i18n="nav.navbars.nav_light">认证数据审核</a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="checkUploadApplyDataList.html" data-i18n=""> 证书申请资料审核</a> </li>
+                            <li><a class="menu-item" href="checkUploadFileDataList.html" data-i18n="">文件审核资料审核</a> </li>
+                            <li><a class="menu-item" href="checkUploadOnsiteDataList.html" data-i18n="">现场审核资料审核</a> </li>
+                            <li><a class="menu-item" href="checkUploadCertificateDataList.html" data-i18n="">证书数据审核</a> </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-sub"><a class="menu-item jianceAndshenheyuan" href="" data-i18n="">检测检验数据审核</a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="checkDataList.html?type=5" data-i18n=""> 检测检验审核</a> </li>
+                            <li><a class="menu-item" href="checkDataList.html?type=6" data-i18n="">试运行数据审核</a> </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class=" nav-item jianguanjigou"><a href="#"><i class="la la-navicon"></i><span class="menu-title" data-i18n="nav.navbars.main">数据上传
+</span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item renzhengAndyewuyuan" href="#" data-i18n="nav.navbars.nav_light">认证数据上传</a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="upload_Certificate_Application.html" data-i18n=""> 证书申请资料上传</a> </li>
+                            <li><a class="menu-item" href="upload_Document_audit_Application.html" data-i18n="">文件审核资料上传</a> </li>
+                            <li><a class="menu-item" href="upload_Site_audit.html" data-i18n="">现场审核资料上传</a> </li>
+                            <li><a class="menu-item" href="upload_Certificate_data.html" data-i18n="">证书数据上传</a> </li>
+
+                        </ul>
+                    </li>
+
+
+                    <li><a class="menu-item jianceAndyewuyuan" href="" data-i18n="">检测检验数据上传</a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="upload_Detection.html" data-i18n=""> 检测检验上传</a> </li>
+                            <li><a class="menu-item" href="upload_test_run.html" data-i18n="">试运行数据上传</a> </li>
+
+
+                        </ul>
+                    </li>
+                    <!-- <li><a class="menu-item" href="" data-i18n="">监管数据上传</a> -->
+                    <!-- <ul class="menu-content"> -->
+                    <!-- <li> </li> -->
+                    <!-- </ul> -->
+                    <!-- </li>        -->
+                </ul>
+            </li>
+
+         <!--   <li class=" nav-item"><a href="search-details.html"><i class="la la-arrows-h"></i><span class="menu-title" data-i18n="nav.horz_nav.main">数据查询</span></a> </li> -->
+          <!--  <li class="nav-item"><a href="#"><i class="la la-header"></i><span class="menu-title" data-i18n="nav.page_headers.main">平台监控</span></a>
+                <ul class="menu-content">
+
+                    <li><a class="menu-item" href="point_monitoring.html" data-i18n="">节点状态监控</a> </li>
+                    <li><a class="menu-item" href="block_monitoring.html" data-i18n="">区块信息监控</a> </li>
+                    <li><a class="menu-item" href="transactions_monitoring.html" data-i18n="">交易信息实时监控</a> </li>
+                </ul>
+            </li>
+-->
+            <li class="nav-item"><a href="#"><i class="la la-header"></i><span class="menu-title" data-i18n="nav.page_headers.main">平台监控</span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="point_monitoring.html" data-i18n="">区块链状态监控</a> </li>
+                    <li><a class="menu-item" href="block_monitoring.html" data-i18n="">区块信息监控</a> </li>
+                    <li><a class="menu-item" href="toInformationStatic" data-i18n="">交易信息实时监控</a> </li>
+                </ul>
+            </li>
+    </div>
+</div>
+<div class="app-content content" id="fangbian">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb" style="font-family:microsoft yahei;">
+                            <li class="breadcrumb-item"><a href="index.html">首页</a> </li>
+                            <li class="breadcrumb-item">用户</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <!-- Sorting scenario start -->
+            <section id="sorting-scenario">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title" style="margin:20px 0 0 20px;font-family:microsoft yahei;">用户审核</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body card-dashboard ">
+                                    <!-- <p>Sorting can be done not only with column header interaction,
+                                        but also with sort method.</p>-->
+
+                                    <!-- <div id="sorting-table" class="js-shorting"></div>-->
+
+                                    <div id="" class="js-shorting jsgrid" style="position: relative; height: 400px; width: 100%;">
+                                        <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                                            <table class="jsgrid-table">
+                                                <tr class="jsgrid-header-row">
+                                                    <th class="jsgrid-header-cell jsgrid-align-center" style="width: 50px;">用户名</th>
+                                                    <th class="jsgrid-header-cell jsgrid-align-center" style="width: 150px;">身份证号</th>
+                                                    <th class="jsgrid-header-cell jsgrid-align-center" style="width: 100px;">机构编号</th>
+                                                    <th class="jsgrid-header-cell jsgrid-align-center" style="width: 100px;">机构名称</th>
+                                                    <th class="jsgrid-header-cell jsgrid-align-center" style="width: 100px;">操作</th>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        <div class="jsgrid-grid-body" style="height: 363px;">
+                                            <table class="jsgrid-table" id="ban">
+                                                <tbody>
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="jsgrid-pager-container" style="display: none;"></div>
+                                        <div class="jsgrid-load-shader" style="display: none; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; z-index: 1000;"></div>
+                                        <div class="jsgrid-load-panel" style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please, wait...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Sorting scenario end -->
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var unitt=Cookies.get("unittype");
+    var usert=Cookies.get("usertype");
+    var out="";
+    if(unitt=="1"){
+        out=out+"认证机构";
+    }
+    else if(unitt=="2"){
+        out=out+"检测检验机构";
+    }
+    else if(unitt=="3"){
+        out=out+"政府监管机构";
+    }
+    out=out+"的";
+    if(usert=="1"){
+        out=out+"业务员";
+    }
+    else if(usert=="2"){
+        out=out+"审核员";
+    }else if(usert=="3"){
+        out=out+"管理员";
+    }
+    $("#currentLogin").text(out);
+
+
+
+</script>
+
+<script language="JAVASCRIPT" src='../js/configuration.js'></script>
+<script>
+
+    var onUserID = 0;
+
+    $(function(){
+        $.ajax({
+            dataType:"json",
+            type:"get",
+            crossDomain: true,
+            contentType: 'application/json',
+            url:"getRevList",
+            eache: false,
+            success: function (data) {
+                console.log(data);
+                for(var i=0;i<data.length;i++){
+
+              //      $("#ban").append(" <tr class='jsgrid-row'> <td class='jsgrid-cell jsgrid-align-center' style='width:50px;'>"+data[i].temp1+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 150px;'>"+data[i].temp1+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'>"+data[i].temp1+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'>"+data[i].temp1+"</td></tr> ");
+                    $("#ban").append(" <tr class='jsgrid-alt-row'> <td class='jsgrid-cell jsgrid-align-center' style='width:50px;'>"+data[i].idCard.split(";")[1]+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 150px;'>"+data[i].idCard.split(";")[0]+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'>"+data[i].institutionNumber+"</td><td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'>"+data[i].institutionName+"</td>" +
+                        "<td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'>  " +
+                        "<button class='badge badge-primary' style='padding:8px 8px;' onclick='attention("+data[i].id+")'>审核成功</button></a>&nbsp;&nbsp;" +
+                        "<button class='badge badge-primary' style='padding:8px 8px;' onclick='attentionFail("+data[i].id+")'>未通过审核</button> </td></tr> ");
+                }
+
+
+            },
+            error: function (id) {
+                console.log("111");
+
+            }
+        });
+    });
+
+    function attentionFail(id) {
+        onUserID = id;
+        $("#fangbian").append("<div id='light' style='display:block;width: 40%;height: 50%' class='white_content form-control form-control-lg '>请填写审核失败原因" +
+            "                        <textarea style='height: 65%;margin-top: 15px' type='text' style='margin-top: 15px' class='form-control form-control-lg input-lg' id='failRemark' placeholder='审核失败原因'" +
+            "                        required></textarea>" +
+            "                        <div class='form-control-position'>" +
+            "                          <i class='ft-user'></i>" +
+            "                        </div>" +
+                "<button style='margin-top: 15px;width: 20%;margin-left:20%;display: inline-block' onclick='reviewFail()' class='btn btn-info btn-lg btn-block'> 提交</button>"+
+            "<button style='margin-top: 15px;width: 20%;display: inline-block;margin-left:20%' onclick='$(\"#light\").remove()' class='btn btn-info btn-lg btn-block'> 退出</button>"+
+            "                      </fieldset>"
+            +"</div>")
+
+        // $("#fangbian").append("<div id='myModal' style='display: block;z-index:9999' class='reveal-modal'>\n" +
+        //     "      \n" +
+        //     "    <h1>\n" +
+        //     "        jquery导出层\n" +
+        //     "    </h1>\n" +
+        //     "    <p>" +
+        //     "        This is a default modal in all its glory, but any of the styles here can easily be changed in the CSS.\n" +
+        //     "    </p>" +
+        //     "<a class='close-reveal-modal'>×</a>" +
+        //     "</div>")
+
+    }
+    function reviewFail(){
+        var remark = $("#failRemark").val()
+        if(remark==null || remark=="")
+            alert("请填写未通过审核理由！")
+        else if(remark.length>100)
+            alert("审核理由过长，请不要超过100字符！")
+        else{
+        $.ajax({
+            dataType:"json",
+            type:"get",
+            crossDomain: true,
+            contentType: 'application/json',
+            url:"reviewFail",
+            eache: false,
+            data: {id:onUserID,remark:remark},
+            success: function (data) {
+                my_confirm(data.msg,function () {
+                    window.location.reload()
+                })
+
+            },
+            error: function () {
+
+            }
+        });
+        }
+    }
+    function attention(id) {
+        //event.stopPropagation();
+        // code
+        $.ajax({
+            dataType:"json",
+            type:"get",
+            crossDomain: true,
+            contentType: 'application/json',
+            url:"reviewSuccess?id="+id,
+            eache: false,
+            success: function (data) {
+                my_confirm(data.msg,function () {
+                    window.location.reload()
+                });
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+            function login(){
+                var username=document.getElementById("user-name").value;
+                var password=document.getElementById("user-password").value;
+                $.ajax({
+                    dataType:"json",
+                    type:"post",
+                    contentType: 'application/x-www-form-urlencoded',
+                    //url:"http://47.105.220.31:4000/users",
+                    url:"/userLogin",
+                    data:{"username":username,"password":password},
+                    success: function (result) {
+                        console.log(result)
+                        if(result.code==0){
+                            Cookies.set('loginname',username);
+                            Cookies.set("usertype",result.msg);
+                            window.location.href="toindex";
+                        }else{
+                            my_confirm(result.msg,function () {
+                                if (result.code == -1) {
+                                    window.location.href = "toAdminRegister";
+                                }
+                            })
+
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+            }
+</script>
+</div>
+<div class="card-footer">
+    <div class="">
+        <p class="float-sm-left text-center m-0"><a href="recover-password.html" class="card-link">重置密码</a></p>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+    }
+
+
+</script>
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<footer class="footer footer-static footer-light navbar-border navbar-shadow">
+    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"> <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019<a class="text-bold-800 grey darken-2" href="index.html"
+                                                                                                                                                    target="_blank">中科启信 </a>, All rights reserved. </span> </p>
+</footer>
+<!-- BEGIN VENDOR JS-->
+<script src="../vendors/js/vendors.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<script src="../vendors/js/tables/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+<script src="../vendors/js/tables/jsgrid/griddata.js" type="text/javascript"></script>
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN MODERN JS-->
+<script src="../js/core/app-menu.js" type="text/javascript"></script>
+<script src="../js/core/app.js" type="text/javascript"></script>
+<script src="../js/scripts/customizer.js" type="text/javascript"></script>
+<!-- END MODERN JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="../js/scripts/tables/jsgrid/jsgrid.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+<script src="../js/editHtml.js" type="text/javascript"></script>
+</body>
+</html>

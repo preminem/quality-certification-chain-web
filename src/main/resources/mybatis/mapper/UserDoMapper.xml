@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.UserDoMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.UserDo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="institution_number" property="institutionNumber" jdbcType="BIGINT"/>
+        <result column="institution_name" property="institutionName" jdbcType="VARCHAR"/>
+        <result column="institution_type" property="institutionType" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="ID_CARD" property="idCard" jdbcType="INTEGER"/>
+        <result column="user_status" property="userStatus" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, username, password, institution_number, institution_name, institution_type, user_type, 
+    ID_CARD, user_status, remark, remarks
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.UserDoExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.example.demo.domain.UserDoExample">
+        delete from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.example.demo.domain.UserDo">
+    insert into user (id, username, password, 
+      institution_number, institution_name, institution_type, 
+      user_type, ID_CARD, user_status)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{institutionNumber,jdbcType=BIGINT}, #{institutionName,jdbcType=VARCHAR}, #{institutionType,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{idCard,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.demo.domain.UserDo">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="institutionNumber != null">
+                institution_number,
+            </if>
+            <if test="institutionName != null">
+                institution_name,
+            </if>
+            <if test="institutionType != null">
+                institution_type,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="idCard != null">
+                ID_CARD,
+            </if>
+            <if test="userStatus != null">
+                user_status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionNumber != null">
+                #{institutionNumber,jdbcType=BIGINT},
+            </if>
+            <if test="institutionName != null">
+                #{institutionName,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionType != null">
+                #{institutionType,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=INTEGER},
+            </if>
+            <if test="userStatus != null">
+                #{userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.example.demo.domain.UserDoExample" resultType="java.lang.Integer">
+        select count(*) from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.username != null">
+                username = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institutionNumber != null">
+                institution_number = #{record.institutionNumber,jdbcType=BIGINT},
+            </if>
+            <if test="record.institutionName != null">
+                institution_name = #{record.institutionName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institutionType != null">
+                institution_type = #{record.institutionType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userType != null">
+                user_type = #{record.userType,jdbcType=INTEGER},
+            </if>
+            <if test="record.idCard != null">
+                ID_CARD = #{record.idCard,jdbcType=INTEGER},
+            </if>
+            <if test="record.userStatus != null">
+                user_status = #{record.userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remarks != null">
+                remarks = #{record.remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set id = #{record.id,jdbcType=INTEGER},
+        username = #{record.username,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        institution_number = #{record.institutionNumber,jdbcType=BIGINT},
+        institution_name = #{record.institutionName,jdbcType=VARCHAR},
+        institution_type = #{record.institutionType,jdbcType=VARCHAR},
+        user_type = #{record.userType,jdbcType=INTEGER},
+        ID_CARD = #{record.idCard,jdbcType=INTEGER},
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        remarks = #{record.remarks,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.UserDo">
+        update user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionNumber != null">
+                institution_number = #{institutionNumber,jdbcType=BIGINT},
+            </if>
+            <if test="institutionName != null">
+                institution_name = #{institutionName,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionType != null">
+                institution_type = #{institutionType,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="idCard != null">
+                ID_CARD = #{idCard,jdbcType=INTEGER},
+            </if>
+            <if test="userStatus != null">
+                user_status = #{userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.UserDo">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      institution_number = #{institutionNumber,jdbcType=BIGINT},
+      institution_name = #{institutionName,jdbcType=VARCHAR},
+      institution_type = #{institutionType,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      ID_CARD = #{idCard,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectUserByUserName" resultMap="BaseResultMap" parameterType="String">
+    select
+    *
+    from user
+    where username = #{username}
+  </select>
+
+    <select id="selectUserByID" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    *
+    from user
+    where id = #{id}
+  </select>
+
+    <update id="updateAdmin" parameterType="com.example.demo.domain.UserDo">
+    update user
+    set
+    institution_number= #{institutionNumber},  institution_name=#{institutionName},
+    institution_type = #{institutionType},  ID_CARD = #{idCard}, user_status = 1,
+    user_type = #{userType}
+    where username=#{username}
+  </update>
+
+    <select id="selectUserByInstType" resultMap="BaseResultMap">
+    select
+    *
+    from user
+    where institution_type = #{institutionType} and user_status = 0
+  </select>
+
+
+    <select id="selectUserByTnstitutionNumber" resultMap="BaseResultMap">
+    select
+    *
+    from user
+    where institution_number = #{institutionNumber}
+  </select>
+
+    <select id="selectOKUserByInstType" resultMap="BaseResultMap">
+    select
+    *
+    from user
+    where institution_type = #{institutionType} and user_status = 1
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select
+    *
+    from user
+  </select>
+
+    <update id="updateState">
+    update user
+    set
+    user_status = #{userStates},
+    remark = #{remark},
+    remarks = #{remarks}
+    where id=#{id}
+  </update>
+
+    <update id="updateUser" parameterType="com.example.demo.domain.UserDo">
+    update user
+    set
+    institution_number= #{institutionNumber},  institution_name=#{institutionName},
+    institution_type = #{institutionType},  ID_CARD = #{idCard}, user_status = 0,
+    user_type = #{userType},username=#{username}
+    where id = #{id}
+  </update>
+
+    <update id="updatePassword">
+    update user
+    set
+    password= #{password}
+    where id = #{id}
+  </update>
+</mapper>
