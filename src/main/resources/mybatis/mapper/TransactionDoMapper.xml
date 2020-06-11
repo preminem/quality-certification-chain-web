@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.TransactionDoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.TransactionDo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="basedata" property="basedata" jdbcType="VARCHAR" />
+    <result column="trancid" property="trancid" jdbcType="VARCHAR" />
+    <result column="checkman" property="checkman" jdbcType="VARCHAR" />
+    <result column="checkmanid" property="checkmanid" jdbcType="VARCHAR" />
+    <result column="uploadman" property="uploadman" jdbcType="VARCHAR" />
+    <result column="uploadmanid" property="uploadmanid" jdbcType="VARCHAR" />
+    <result column="temp" property="temp" jdbcType="VARCHAR" />
+    <result column="temp1" property="temp1" jdbcType="VARCHAR" />
+    <result column="temp2" property="temp2" jdbcType="VARCHAR" />
+    <result column="temp3" property="temp3" jdbcType="VARCHAR" />
+    <result column="isChecked" property="ischecked" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="unittype" property="unittype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, basedata, trancid, checkman, checkmanid, uploadman, uploadmanid, temp, temp1, 
+    temp2, temp3, isChecked, reason, unittype
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.TransactionDoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from transaction
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from transaction
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.TransactionDoExample" >
+    delete from transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.domain.TransactionDo" >
+    insert into transaction (id, basedata, trancid, 
+      checkman, checkmanid, uploadman, 
+      uploadmanid, temp, temp1, 
+      temp2, temp3, isChecked, 
+      reason, unittype)
+    values (#{id,jdbcType=INTEGER}, #{basedata,jdbcType=VARCHAR}, #{trancid,jdbcType=VARCHAR}, 
+      #{checkman,jdbcType=VARCHAR}, #{checkmanid,jdbcType=VARCHAR}, #{uploadman,jdbcType=VARCHAR}, 
+      #{uploadmanid,jdbcType=VARCHAR}, #{temp,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{ischecked,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{unittype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.domain.TransactionDo" >
+    insert into transaction
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="basedata != null" >
+        basedata,
+      </if>
+      <if test="trancid != null" >
+        trancid,
+      </if>
+      <if test="checkman != null" >
+        checkman,
+      </if>
+      <if test="checkmanid != null" >
+        checkmanid,
+      </if>
+      <if test="uploadman != null" >
+        uploadman,
+      </if>
+      <if test="uploadmanid != null" >
+        uploadmanid,
+      </if>
+      <if test="temp != null" >
+        temp,
+      </if>
+      <if test="temp1 != null" >
+        temp1,
+      </if>
+      <if test="temp2 != null" >
+        temp2,
+      </if>
+      <if test="temp3 != null" >
+        temp3,
+      </if>
+      <if test="ischecked != null" >
+        isChecked,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="unittype != null" >
+        unittype,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="basedata != null" >
+        #{basedata,jdbcType=VARCHAR},
+      </if>
+      <if test="trancid != null" >
+        #{trancid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkman != null" >
+        #{checkman,jdbcType=VARCHAR},
+      </if>
+      <if test="checkmanid != null" >
+        #{checkmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadman != null" >
+        #{uploadman,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadmanid != null" >
+        #{uploadmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null" >
+        #{temp,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null" >
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null" >
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null" >
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="ischecked != null" >
+        #{ischecked,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="unittype != null" >
+        #{unittype,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.TransactionDoExample" resultType="java.lang.Integer" >
+    select count(*) from transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="getDataByTime" resultMap="BaseResultMap">
+    select * from transaction
+    where time = #{time,jdbcType=DATE}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transaction
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.basedata != null" >
+        basedata = #{record.basedata,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trancid != null" >
+        trancid = #{record.trancid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkman != null" >
+        checkman = #{record.checkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkmanid != null" >
+        checkmanid = #{record.checkmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadman != null" >
+        uploadman = #{record.uploadman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadmanid != null" >
+        uploadmanid = #{record.uploadmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temp != null" >
+        temp = #{record.temp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temp1 != null" >
+        temp1 = #{record.temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temp2 != null" >
+        temp2 = #{record.temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temp3 != null" >
+        temp3 = #{record.temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ischecked != null" >
+        isChecked = #{record.ischecked,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unittype != null" >
+        unittype = #{record.unittype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transaction
+    set id = #{record.id,jdbcType=INTEGER},
+      basedata = #{record.basedata,jdbcType=VARCHAR},
+      trancid = #{record.trancid,jdbcType=VARCHAR},
+      checkman = #{record.checkman,jdbcType=VARCHAR},
+      checkmanid = #{record.checkmanid,jdbcType=VARCHAR},
+      uploadman = #{record.uploadman,jdbcType=VARCHAR},
+      uploadmanid = #{record.uploadmanid,jdbcType=VARCHAR},
+      temp = #{record.temp,jdbcType=VARCHAR},
+      temp1 = #{record.temp1,jdbcType=VARCHAR},
+      temp2 = #{record.temp2,jdbcType=VARCHAR},
+      temp3 = #{record.temp3,jdbcType=VARCHAR},
+      isChecked = #{record.ischecked,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      unittype = #{record.unittype,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.TransactionDo" >
+    update transaction
+    <set >
+      <if test="basedata != null" >
+        basedata = #{basedata,jdbcType=VARCHAR},
+      </if>
+      <if test="trancid != null" >
+        trancid = #{trancid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkman != null" >
+        checkman = #{checkman,jdbcType=VARCHAR},
+      </if>
+      <if test="checkmanid != null" >
+        checkmanid = #{checkmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadman != null" >
+        uploadman = #{uploadman,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadmanid != null" >
+        uploadmanid = #{uploadmanid,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null" >
+        temp = #{temp,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null" >
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null" >
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null" >
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="ischecked != null" >
+        isChecked = #{ischecked,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="unittype != null" >
+        unittype = #{unittype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.TransactionDo" >
+    update transaction
+    set basedata = #{basedata,jdbcType=VARCHAR},
+      trancid = #{trancid,jdbcType=VARCHAR},
+      checkman = #{checkman,jdbcType=VARCHAR},
+      checkmanid = #{checkmanid,jdbcType=VARCHAR},
+      uploadman = #{uploadman,jdbcType=VARCHAR},
+      uploadmanid = #{uploadmanid,jdbcType=VARCHAR},
+      temp = #{temp,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      isChecked = #{ischecked,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      unittype = #{unittype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
