@@ -37,7 +37,7 @@ public class InstitutionController {
     // 查询机构
     @RequestMapping(value = "/getInstitutions", produces = "text/json;charset=utf-8")//获取证书数据申请列表
     @ResponseBody
-    public List<InstitutionDo> getInstitution(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public List<InstitutionDo> getInstitution(HttpServletRequest request) throws IOException {
         Gson gson = new Gson();
         HttpSession session = request.getSession();
         String ss = session.getAttribute("userID").toString();
@@ -67,12 +67,9 @@ public class InstitutionController {
     // 更新机构状态
     @RequestMapping(value = "/updateInstitutionStatus", method = RequestMethod.POST, produces = "text/json;charset=utf-8")
     @ResponseBody
-    public String updateInstitutionStatus(@RequestBody String param) throws IOException {
-        JSONObject jsonObject = JSONObject.fromObject(param);
-        String number = jsonObject.getString("institution_number");
-        String isInvalid = jsonObject.getString("isInvalid");
-
-        institutionService.updateState(number, isInvalid);
+    public String updateInstitutionStatus(String institution_number, String isInvalid) throws IOException {
+        System.out.println("updateInstitutionStatus: " + institution_number + " " + isInvalid);
+        institutionService.updateState(institution_number, isInvalid);
         Gson gson = new Gson();
         return gson.toJson(R.ok("成功"));
     }

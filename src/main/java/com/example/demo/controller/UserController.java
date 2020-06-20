@@ -253,7 +253,7 @@ public class UserController {
             return R.error("该机构不存在！");
         else if (!institutionDo.getInstitutionName().equals(user.getInstitutionName()))
             return R.error("机构编号与机构名称不符！");
-        else if ("1" == institutionDo.getisInvalid())
+        else if (institutionDo.getisInvalid().equals("1"))
             return R.error("该机构已被取消资格！");
 
         //管理员字段判断
