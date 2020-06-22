@@ -7,6 +7,7 @@
         <result column="institution_type" property="institutionType" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="isInvalid" property="isInvalid" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -69,7 +70,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    institution_number, institution_name, institution_type, remark, remarks
+    institution_number, institution_name, institution_type, remark, remarks, isInvalid
   </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.InstitutionDoExample">
         select
@@ -103,11 +104,11 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.example.demo.domain.InstitutionDo">
-    insert into institution (institution_number, institution_name, 
-      institution_type, remark, remarks
+    insert into institution (institution_number, institution_name,
+      institution_type, remark, remarks, isInvalid
       )
-    values (#{institutionNumber,jdbcType=INTEGER}, #{institutionName,jdbcType=VARCHAR}, 
-      #{institutionType,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+    values (#{institutionNumber,jdbcType=INTEGER}, #{institutionName,jdbcType=VARCHAR},
+      #{institutionType,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{isInvalid,jdbcType=VARCHAR}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.example.demo.domain.InstitutionDo">
@@ -128,6 +129,9 @@
             <if test="remarks != null">
                 remarks,
             </if>
+            <if test="isInvalid != null">
+                isInvalid,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="institutionNumber != null">
@@ -144,6 +148,9 @@
             </if>
             <if test="remarks != null">
                 #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="isInvalid != null">
+                #{isInvalid,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -172,6 +179,9 @@
             <if test="record.remarks != null">
                 remarks = #{record.remarks,jdbcType=VARCHAR},
             </if>
+            <if test="record.isInvalid != null">
+                remarks = #{record.isInvalid,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -184,6 +194,7 @@
         institution_type = #{record.institutionType,jdbcType=VARCHAR},
         remark = #{record.remark,jdbcType=VARCHAR},
         remarks = #{record.remarks,jdbcType=VARCHAR}
+        isInvalid = #{record.isInvalid,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -202,6 +213,9 @@
             </if>
             <if test="remarks != null">
                 remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="isInvalid != null">
+                isInvalid = #{isInvalid,jdbcType=VARCHAR},
             </if>
         </set>
         where institution_number = #{institutionNumber,jdbcType=INTEGER}
@@ -230,7 +244,7 @@
   </select>
     <update id="updateState" parameterType="com.example.demo.domain.InstitutionDo">
     update institution
-    set isInvalid = #{isInvalid,jdbcType=VARCHAR},
-    where institution_number = #{institutionNumber,jdbcType=INTEGER}
+    set isInvalid = #{isInvalid,jdbcType=VARCHAR}
+    where institution_number = #{institution_number,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -36,5 +36,5 @@ public interface InstitutionDoMapper {
 
     List<InstitutionDo> selectInstitutionByType(String institutionType);
 
-    int updateState(String institutionNumber, String isInvalid);
+    int updateState(@Param("institution_number") String institutionNumber, @Param("isInvalid") String isInvalid);
 }
